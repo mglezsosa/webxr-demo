@@ -4,16 +4,51 @@
 <head>
     <meta charset="utf-8">
     <title>Hello, WebVR! • A-Frame</title>
-    <meta name="description" content="Hello, WebVR! • A-Frame">
+    <meta name="description" content="WebXR demo">
     <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script
+        src="https://unpkg.com/aframe-animation-timeline-component@2.0.0/dist/aframe-animation-timeline-component.min.js"></script>
 </head>
 
 <body>
-    <a-scene background="color: #FAFAFA">
-        <a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9" shadow></a-box>
-        <a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E" shadow></a-sphere>
-        <a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D" shadow></a-cylinder>
-        <a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4" shadow></a-plane>
+    <a-scene background="color: #fff" shadow="type: pcfsoft" light="castShadow: true;"
+        inspector="https://cdn.jsdelivr.net/gh/aframevr/aframe-inspector@master/dist/aframe-inspector.min.js"
+        animation-timeline__1="timeline: #x-timeline; loop: true"
+        animation-timeline__2="timeline: #y-timeline; loop: true"
+        animation-timeline__3="timeline: #rotation-timeline; loop: true">
+        <a-assets>
+            <a-asset-item id="sigma" src="/sigma-logo-3d.gltf"></a-asset-item>
+
+            <a-timeline id="x-timeline">
+                <a-timeline-animation select="#sigma-entity" name="position-x-1"></a-timeline-animation>
+                <a-timeline-animation select="#sigma-entity" name="position-x-2"></a-timeline-animation>
+            </a-timeline>
+
+            <a-timeline id="y-timeline">
+                <a-timeline-animation select="#sigma-entity" name="position-y-1"></a-timeline-animation>
+                <a-timeline-animation select="#sigma-entity" name="position-y-2"></a-timeline-animation>
+            </a-timeline>
+
+            <a-timeline id="rotation-timeline">
+                <a-timeline-animation select="#sigma-entity" name="rotation-1"></a-timeline-animation>
+                <a-timeline-animation select="#sigma-entity" name="rotation-2"></a-timeline-animation>
+            </a-timeline>
+        </a-assets>
+
+        <a-sky src="#skyTexture" theta-length="90" radius="30"></a-sky>
+
+        <a-entity id="ground" type="background" static-body geometry="primitive: cylinder; radius: 30; height: 0.1"
+            position="0 0 0" material="shader: flat; color: #eee">
+        </a-entity>
+
+        <a-entity id="sigma-entity" gltf-model="#sigma" position="0 1.6 -3" rotation="90 0 0" scale="15 15 15"
+            animation__position-x-1="property: object3D.position.x; from: 0.1; to: -0.1; dur: 3000; easing: easeInOutQuad; autoplay: false"
+            animation__position-x-2="property: object3D.position.x; from: -0.1; to: 0.1; dur: 3000; easing: easeInOutQuad; autoplay: false"
+            animation__position-y-1="property: object3D.position.y; from: 1.58; to: 1.6; dur: 1500; easing: easeInOutSine; autoplay: false"
+            animation__position-y-2="property: object3D.position.y; from: 1.6; to: 1.58; dur: 1500; easing: easeInOutSine; autoplay: false"
+            animation__rotation-1="property: object3D.rotation.y; from: -3; to: 3; dur: 3000; easing: easeInOutSine; autoplay: false"
+            animation__rotation-2="property: object3D.rotation.y; from: 3; to: -3; dur: 3000; easing: easeInOutSine; autoplay: false">
+        </a-entity>
     </a-scene>
 </body>
 
